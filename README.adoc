@@ -8,7 +8,7 @@ Original implementation for Simply Plural by @LiEnby: https://silica.codes/Li/Pl
 
 You'll need a server with Deno installed. Managed solutions exist.
 
-CAUTION: This program emulates the Discord client and thus breaks the ToS. Discord could terminate your account. You have been warned.
+CAUTION: This program emulates the Discord client and thus, depending on the interpretation, might break the ToS. Discord could terminate your account. You have been warned.
 
 1. Configure your reverse proxy for the webhook; example for nginx:
 +
