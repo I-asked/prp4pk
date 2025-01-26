@@ -1,0 +1,46 @@
+= Prp4pk (Plural Rich Presence for PluralKit)
+
+Synchronize Discord status with PluralKit using the Discord Rich Presence private API.
+
+Original implementation for Simply Plural by @LiEnby: https://silica.codes/Li/PluralRichPresence
+
+== Usage with Deno
+
+You'll need a server with Deno installed. Managed solutions exist.
+
+CAUTION: This program emulates the Discord client and thus breaks the ToS. Discord could terminate your account. You have been warned.
+
+1. Configure your reverse proxy for the webhook; example for nginx:
++
+----
+server {
+  listen 80;
+  listen [::]:80;
+
+  server_name example.net;
+
+  location /pkwebhook {
+    proxy_pass http://localhost:8000/;
+
+    proxy_set_header Host $http_host;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+  }
+}
+----
+2. Obtain your *Discord user token*; see e.g.: https://gist.github.com/MarvNC/e601f3603df22f36ebd3102c501116c6
+3. Obtain the *PluralKit API token* by issuing a command in PluralKit DM's: `pk;token`
+4. Obtain the *PluralKit Dispatch signing token* by issuing the appropriate command in PluralKit DM's: `pk;s webhook http://example.net/pkwebhook` (replace the URL with the URL you set for the reverse proxy)
+5. Launch the application in Deno:
++
+----
+screen env PK_API_TOKEN='…' PRP_PK_SIGNING_TOKEN='…' DISCORD_TOKEN='…' deno --allow-net --allow-env --allow-read main.ts
+----
++
+Replace *ellipses* (`…`) with appropriate tokens:
++
+`DISCORD_TOKEN`:: Discord user token
+`PK_API_TOKEN`:: PluralKit API token
+`PRP_PK_SIGNING_TOKEN`:: PluralKit Dispatch signing token
+6. Press `Ctrl-A, D` to detach from "`screen`" or hang up your teletypewriter
